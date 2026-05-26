@@ -15,9 +15,9 @@ for i in range(5):
         radius=0.7,
         color=color.yellow)]
 while True : 
-    k = keysdown()
-     if ' 'in k :
+   rate(100)
+   k = keysdown()
+   if ' 'in k :
        ball.pos.x = random.uniform(-10, 5)
        ball.pos.y = random.uniform(-5, 5)
-
 
