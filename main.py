@@ -1,9 +1,6 @@
 from vpython import *
 import random
 
-scene.background = color.black
-scene.title = "Red vs Yellow - Day 1"
-
 red_balls = []
 yellow_balls = []
 
