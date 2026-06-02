@@ -1,22 +1,48 @@
+Web VPython 3.2
 from vpython import *
 import random
 
-red_balls = []
-yellow_balls = []
+d = 1
 
-for i in range(5):
-    red_balls.append(sphere(pos=vector(random.uniform(-5,-3), random.uniform(-3,3),0),
-                            radius=0.4, color=color.red))
-    yellow_balls.append(sphere(pos=vector(random.uniform(-5,-3), random.uniform(-3,3),0),
-                               radius=0.4, color=color.yellow))
 
-launcher = arrow(pos=vector(5,0,0), axis=vector(-2,0,0),
-                 shaftwidth=0.3, color=color.cyan)
+gun = arrow(pos=vector(8,0,0),axis=vector(-2,0,0),color=color.blue)
 
-launcher_dir = 1
+
+reds = []
+
+for i in range(10):
+    r = sphere(
+        pos=vector(random.uniform(-8,-2),random.uniform(-5,5),0),radius=0.6,color=color.red)
+    reds.append(r)
+
+
+bullets = []
+
+def shoot():
+    bullet = sphere(
+        pos=gun.pos,
+        radius=0.2,
+        color=color.white)
+    bullet.v = vector(-0.4,0,0)
+    bullets.append(bullet)
 
 while True:
-    rate(60)
-    launcher.pos.y += 0.05 * launcher_dir
-    if abs(launcher.pos.y) > 3:
-        launcher_dir *= -1
+    rate(100)
+  
+    gun.pos.y = gun.pos.y + 0.05 * d
+
+    if gun.pos.y > 5:
+        d = d * -1
+    if gun.pos.y < -5:
+        d = d * 1
+  
+    if ' ' in keysdown():
+        shoot()
+        rate(10)
+
+    for bullet in bullets[:]:
+        bullet.pos = bullet.pos + bullet.v
+
+        if bullet.pos.x < -10:
+            bullet.visible = False
+            bullets.remove(bullet)
