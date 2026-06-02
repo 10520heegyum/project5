@@ -7,17 +7,13 @@ d = 1
 
 gun = arrow(pos=vector(8,0,0),axis=vector(-2,0,0),color=color.blue)
 
-
 reds = []
-
 for i in range(10):
     r = sphere(
         pos=vector(random.uniform(-8,-2),random.uniform(-5,5),0),radius=0.6,color=color.red)
     reds.append(r)
 
-
 bullets = []
-
 def shoot():
     bullet = sphere(
         pos=gun.pos,
