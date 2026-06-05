@@ -1,44 +1,43 @@
 Web VPython 3.2
-from vpython import *
-import random
-
-d = 1
-
-
-gun = arrow(pos=vector(8,0,0),axis=vector(-2,0,0),color=color.blue)
 
 reds = []
+bullets = []
+
+gun = arrow(pos=vector(6, 0, 0),axis=vector(-1.5, 0, 0),color=color.blue)
+
 for i in range(10):
-    r = sphere(
-        pos=vector(random.uniform(-8,-2),random.uniform(-5,5),0),radius=0.6,color=color.red)
+    r = sphere(pos=vector(-5, i - 4.5, 0),radius=0.4,color=color.red)
     reds.append(r)
 
-bullets = []
 def shoot():
-    bullet = sphere(
-        pos=gun.pos,
-        radius=0.2,
-        color=color.white)
-    bullet.v = vector(-0.4,0,0)
-    bullets.append(bullet)
+    b = sphere(pos=gun.pos,radius=0.15,color=color.white)
+    b.v = vector(-0.4, 0, 0)
+    bullets.append(b)
 
 while True:
     rate(100)
-  
-    gun.pos.y = gun.pos.y + 0.05 * d
 
+    gun.pos.y = gun.pos.y + 0.05
+    
     if gun.pos.y > 5:
-        d = d * -1
-    if gun.pos.y < -5:
-        d = d * 1
-  
+        gun.pos.y = -5
+    
     if ' ' in keysdown():
         shoot()
-        rate(10)
-
-    for bullet in bullets[:]:
-        bullet.pos = bullet.pos + bullet.v
-
-        if bullet.pos.x < -10:
-            bullet.visible = False
-            bullets.remove(bullet)
+    
+    for b in bullets[:]:
+        b.pos = b.pos + b.v 
+        
+        if b.pos.x < -8:
+            b.visible = False
+            bullets.remove(b)
+        
+        for r in reds[:]:
+            if mag(b.pos - r.pos) < 0.8:
+                r.visible = False
+                b.visible = False
+                reds.remove(r)
+                bullets.remove(b)
+               
+    if len(reds) == 0 :
+        label(pos=vector(0, 0, 0),text="YOU WIN!",color=color.red)
