@@ -44,5 +44,4 @@ while True:
                 bullets.remove(b)
                
     if len(reds) == 0 :
-        label(pos=vector(0, 0, 0),text="win!",color=color.red)
         break
